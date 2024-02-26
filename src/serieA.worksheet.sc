@@ -40,7 +40,6 @@ compteur match
     case 0 => println(nom)
     case _ => println(prenom)
 
-
 // Niveau 2
 
 // 10.
@@ -112,25 +111,59 @@ f5(2, 3, 0)
 // 18.
 
 def f6(x: Int, y: Int): Int =
-    if x == y then return x // A
+    if x == y then
+        if y == 0 then return 42 // A
+        else return x // B
     else if x < y then
-        if x > 4 then return 42 // B
-        else return y // C
+        if x > 4 then return 2 * x // C
+        else return y // D
     else if x > y then
-        if y % 2 != 0 && x % 2 == 0 then return 4 * x - 7 * y // D
-        else if x % 3 == 0 && y % 4 == 0 then return x * x + y * y // E
-        else if x % 2 != 0 then return 2 * x + 3 * y // F
-    return 9 // G
+        if y % 2 != 0 && x % 2 == 0 then return 4 * x - 7 * y // E
+        else if x % 3 == 0 && y % 4 == 0 then return x * x + y * y * y // F
+        else if x % 2 != 0 then return 2 * x + 3 * y // G
+    return 9 // H
 
 f6(0, 0) // A
-f6(5, 9) // B
-f6(1, 3) // C
-f6(4, 1) // D
-f6(9, 4) // E
-f6(5, 2) // F
-f6(4, 2) // G
+f6(5, 5) // B
+f6(5, 9) // C
+f6(1, 3) // D
+f6(6, 1) // E
+f6(9, 4) // F
+f6(5, 2) // G
+f6(4, 2) // H
 
 def f7(x: Int, y: Int): Int = (x, y) match
-    case (a, b) if a == b => a
-    case (a, b) if a < b => if x > 4 then 32 else b
-    case (a, b) if a > b => 
+    case (a, b) if a == b => if y == 0 then 42 else a
+    case (a, b) if a < b => if x > 4 then 42 else b
+    case (a, b) if a > b => (a, b) match
+        case (a, b) if a % 2 != 0 && x % 2 == 0 => 4 * x - 7 * y
+        case (a, b) if a % 3 == 0 && y % 4 == 0 => x * x + y * y * y
+        case (a, b) if a % 2 != 0 => 2 * x + 3 * y
+        case (_, _) => 9
+    case _ => 9
+
+f6(0, 0) // A
+f6(5, 5) // B
+f6(5, 9) // C
+f6(1, 3) // D
+f6(6, 1) // E
+f6(9, 4) // F
+f6(5, 2) // G
+f6(4, 2) // H
+
+// 19.
+
+def fib(n: Int): Int = if n < 2 then n else fib(n - 1) + fib(n - 2)
+
+def fib2(n: Int): Int =
+    var a = 0
+    var b = 1
+    var c = n
+    for i <- 2.to(n) do
+        c = a + b
+        a = b
+        b = c
+    return c
+
+fib(20)
+fib2(20)
